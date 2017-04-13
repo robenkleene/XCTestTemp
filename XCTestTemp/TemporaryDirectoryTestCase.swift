@@ -8,8 +8,6 @@
 
 import XCTest
 
-@testable import Web_Console
-
 // TODO: Put this in the appropriate spot
 // XCTAssert(false, "Attempted to delete a temporary item that is not in the temporary directory.")
 // XCTAssert(false, "Attempted to delete a temporary item at a path that does not have the temporary directory path prefix.")
