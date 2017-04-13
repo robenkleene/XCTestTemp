@@ -3,7 +3,7 @@
 A simple `XCTestCase` subclass that creates a temporary directory that the tests can use. If the temporary directory is not completely empty after the test 
 
 * It's macOS only.
-* Install with Carthage.
+* Install with [Carthage](https://github.com/Carthage/Carthage).
 
 Usage:
 
