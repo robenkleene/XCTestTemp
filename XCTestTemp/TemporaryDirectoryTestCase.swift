@@ -89,7 +89,7 @@ public class TemporaryDirectoryTestCase: XCTestCase {
         }
     }
     
-    override func setUp() {
+    override public func setUp() {
         super.setUp()
 
         if let temporaryDirectory = NSTemporaryDirectory() as String? {
@@ -120,7 +120,7 @@ public class TemporaryDirectoryTestCase: XCTestCase {
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
     }
     
-    override func tearDown() {
+    override public func tearDown() {
         super.tearDown()
         
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
