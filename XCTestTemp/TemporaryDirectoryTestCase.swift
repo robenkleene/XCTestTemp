@@ -17,7 +17,7 @@ enum TemporaryDirectoryError: Error {
     case invalidURLError(URL: URL)
 }
 
-public class TemporaryDirectoryTestCase: XCTestCase {
+open class TemporaryDirectoryTestCase: XCTestCase {
     public var temporaryDirectoryPath: String!
     public var temporaryDirectoryURL: URL! {
         get {
@@ -89,7 +89,7 @@ public class TemporaryDirectoryTestCase: XCTestCase {
         }
     }
     
-    override public func setUp() {
+    override open func setUp() {
         super.setUp()
 
         if let temporaryDirectory = NSTemporaryDirectory() as String? {
@@ -120,7 +120,7 @@ public class TemporaryDirectoryTestCase: XCTestCase {
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
     }
     
-    override public func tearDown() {
+    override open func tearDown() {
         super.tearDown()
         
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
