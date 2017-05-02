@@ -17,9 +17,9 @@ enum TemporaryDirectoryError: Error {
     case invalidURLError(URL: URL)
 }
 
-class TemporaryDirectoryTestCase: XCTestCase {
-    var temporaryDirectoryPath: String!
-    var temporaryDirectoryURL: URL! {
+open class TemporaryDirectoryTestCase: XCTestCase {
+    public var temporaryDirectoryPath: String!
+    public var temporaryDirectoryURL: URL! {
         get {
             return URL(fileURLWithPath:temporaryDirectoryPath)
         }
@@ -30,7 +30,7 @@ class TemporaryDirectoryTestCase: XCTestCase {
         static let temporaryDirectoryPathPrefix = "/var/folders"
     }
     
-    class func resolve(temporaryDirectoryPath path: String) -> String {
+    public class func resolve(temporaryDirectoryPath path: String) -> String {
         // Remove the `/private` path component that `FSEvents` returns paths
         // with this prefix.
         let testPathPrefix = ("/private" as NSString).appendingPathComponent(ClassConstants.temporaryDirectoryPathPrefix)
@@ -58,7 +58,7 @@ class TemporaryDirectoryTestCase: XCTestCase {
         }
     }
 
-    func removeTemporaryItem(at URL: URL) throws {
+    public func removeTemporaryItem(at URL: URL) throws {
         do {
             try removeTemporaryItem(atPath: URL.path)
         } catch let error as NSError {
@@ -66,7 +66,7 @@ class TemporaryDirectoryTestCase: XCTestCase {
         }
     }
     
-    func removeTemporaryItem(atPath path: String) throws {
+    public func removeTemporaryItem(atPath path: String) throws {
         if !path.hasPrefix(temporaryDirectoryPath) {
             throw TemporaryDirectoryError.notInTemporaryDirectoryError(path: path)
         }
@@ -89,7 +89,7 @@ class TemporaryDirectoryTestCase: XCTestCase {
         }
     }
     
-    override func setUp() {
+    override open func setUp() {
         super.setUp()
 
         if let temporaryDirectory = NSTemporaryDirectory() as String? {
@@ -120,7 +120,7 @@ class TemporaryDirectoryTestCase: XCTestCase {
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
     }
     
-    override func tearDown() {
+    override open func tearDown() {
         super.tearDown()
         
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
