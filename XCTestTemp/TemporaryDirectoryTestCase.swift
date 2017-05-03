@@ -8,27 +8,34 @@
 
 import XCTest
 
-// TODO: Put this in the appropriate spot
-// XCTAssert(false, "Attempted to delete a temporary item that is not in the temporary directory.")
-// XCTAssert(false, "Attempted to delete a temporary item at a path that does not have the temporary directory path prefix.")
-
 enum TemporaryDirectoryError: Error {
     case notInTemporaryDirectoryError(path: String)
     case invalidURLError(URL: URL)
 }
 
 open class TemporaryDirectoryTestCase: XCTestCase {
+    
+    // MARK: Public
+
     public var temporaryDirectoryPath: String!
     public var temporaryDirectoryURL: URL! {
         get {
             return URL(fileURLWithPath:temporaryDirectoryPath)
         }
     }
-
+    public var identifier: String {
+        let removeCharacterSet = NSCharacterSet.alphanumerics.inverted
+        // The `"\(className)"` might also be useful for the identifier.
+        return String(describing: self)
+            .trimmingCharacters(in: removeCharacterSet)
+            .replacingOccurrences(of: " ", with: ".")
+    }
+    
     struct ClassConstants {
-        static let bundleIdentifier = Bundle.main.bundleIdentifier!
         static let temporaryDirectoryPathPrefix = "/var/folders"
     }
+    
+    // MARK: Public
     
     public class func resolve(temporaryDirectoryPath path: String) -> String {
         // Remove the `/private` path component that `FSEvents` returns paths
@@ -48,8 +55,17 @@ open class TemporaryDirectoryTestCase: XCTestCase {
 
         return FileManager.default.fileExists(atPath: path, isDirectory: &isDir) && isDir.boolValue
     }
+
+    public func urlForTemporaryItem(withPathComponent pathComponent: String) -> URL {
+        let path = pathForTemporaryItem(withPathComponent: pathComponent)
+        return URL(fileURLWithPath: path)
+    }
     
-    func removeTemporaryItem(atPathComponent pathComponent: String) throws {
+    public func pathForTemporaryItem(withPathComponent pathComponent: String) -> String {
+        return (temporaryDirectoryPath as NSString).appendingPathComponent(pathComponent)
+    }
+    
+    public func removeTemporaryItem(withPathComponent pathComponent: String) throws {
         let path = (temporaryDirectoryPath as NSString).appendingPathComponent(pathComponent)
         do {
             try type(of: self).safelyRemoveTemporaryItem(atPath: path)
@@ -77,6 +93,8 @@ open class TemporaryDirectoryTestCase: XCTestCase {
         }
     }
     
+    // MARK: Private
+    
     private class func safelyRemoveTemporaryItem(atPath path: String) throws {
         if !path.hasPrefix(ClassConstants.temporaryDirectoryPathPrefix) {
             throw TemporaryDirectoryError.notInTemporaryDirectoryError(path: path)
@@ -88,13 +106,15 @@ open class TemporaryDirectoryTestCase: XCTestCase {
             throw error
         }
     }
-    
+
+    // MARK: Override
+
     override open func setUp() {
         super.setUp()
 
         if let temporaryDirectory = NSTemporaryDirectory() as String? {
-            let identifierDirectoryPath = (temporaryDirectory as NSString).appendingPathComponent(ClassConstants.bundleIdentifier)
-            let path = (identifierDirectoryPath as NSString).appendingPathComponent(className)
+            let path = (temporaryDirectory as NSString).appendingPathComponent(identifier)
+
             if FileManager.default.fileExists(atPath: path) {
                 do {
                     try type(of: self).safelyRemoveTemporaryItem(atPath: path)
@@ -130,9 +150,6 @@ open class TemporaryDirectoryTestCase: XCTestCase {
             if !contents.isEmpty {
                 print("Warning: A temporary directory was not empty during tear down at path \(temporaryDirectoryPath)")
             }
-            // This is an assert because it is evidence that a plugin isn't cleaning up after itself.
-            // On next run the setup will clean it up, so the assert helps identify when a test isn't
-            // cleaning up without hindering future runs.
             XCTAssert(contents.isEmpty, "The contents should be empty")
 
             // Remove the temporary directory
