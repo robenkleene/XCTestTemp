@@ -24,9 +24,12 @@ open class TemporaryDirectoryTestCase: XCTestCase {
             return URL(fileURLWithPath:temporaryDirectoryPath)
         }
     }
-
+    private var identifier: String {
+        let removeCharacterSet = NSCharacterSet.alphanumerics.inverted
+        return String(describing: self).trimmingCharacters(in: removeCharacterSet).replacingOccurrences(of: " ", with: ".")
+    }
+    
     struct ClassConstants {
-        static let bundleIdentifier = Bundle.main.bundleIdentifier!
         static let temporaryDirectoryPathPrefix = "/var/folders"
     }
     
@@ -93,8 +96,9 @@ open class TemporaryDirectoryTestCase: XCTestCase {
         super.setUp()
 
         if let temporaryDirectory = NSTemporaryDirectory() as String? {
-            let identifierDirectoryPath = (temporaryDirectory as NSString).appendingPathComponent(ClassConstants.bundleIdentifier)
-            let path = (identifierDirectoryPath as NSString).appendingPathComponent(className)
+            let classDirectoryPath = (temporaryDirectory as NSString).appendingPathComponent(className)
+            let path = (classDirectoryPath as NSString).appendingPathComponent(identifier)
+
             if FileManager.default.fileExists(atPath: path) {
                 do {
                     try type(of: self).safelyRemoveTemporaryItem(atPath: path)
