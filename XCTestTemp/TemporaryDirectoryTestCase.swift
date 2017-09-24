@@ -92,6 +92,14 @@ open class TemporaryDirectoryTestCase: XCTestCase {
             throw error
         }
     }
+
+    public func isTemporaryItem(atPath path: String) -> Bool {
+        return path.hasPrefix(ClassConstants.temporaryDirectoryPathPrefix)
+    }
+    
+    public func isTemporaryItem(at url: URL) -> Bool {
+        return url.path.hasPrefix(ClassConstants.temporaryDirectoryPathPrefix)
+    }
     
     // MARK: Private
     

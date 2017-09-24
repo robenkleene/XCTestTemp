@@ -18,7 +18,10 @@ class XCTestTempTests: TemporaryDirectoryTestCase {
     func testTemp() {
         let fileURL = urlForTemporaryItem(withPathComponent: testFilename)
         try! testFileContents.write(to: fileURL, atomically: false, encoding: String.Encoding.utf8)
-        
+
+        XCTAssertTrue(isTemporaryItem(at: fileURL))
+        XCTAssertTrue(isTemporaryItem(atPath: fileURL.path))
+
         let result = try! String(contentsOf: fileURL, encoding: String.Encoding.utf8)
         XCTAssertEqual(result, testFileContents)
         try! removeTemporaryItem(withPathComponent: testFilename)
