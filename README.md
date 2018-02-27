@@ -1,4 +1,4 @@
-# `XCTestTemp`
+# `XCTestTemp` [![Build Status](https://travis-ci.org/robenkleene/XCTestTemp.svg?branch=master)](https://travis-ci.org/robenkleene/XCTestTemp)
 
 A simple `XCTestCase` subclass that creates a temporary directory that the tests can use. If the temporary directory is not completely empty after the test 
 
