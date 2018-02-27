@@ -1,0 +1,3 @@
+language: swift
+xcode_project: XCTestTemp.xcodeproj
+xcode_scheme: XCTestTemp
