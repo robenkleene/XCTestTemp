@@ -18,18 +18,18 @@ class XCTestTempTests: TemporaryDirectoryTestCase {
         do {
             try testFileContents.write(to: fileURL, atomically: false, encoding: String.Encoding.utf8)
         } catch {
-            XCTFail()
+            XCTFail("Try should succeed")
         }
 
         XCTAssertTrue(isTemporaryItem(at: fileURL))
         XCTAssertTrue(isTemporaryItem(atPath: fileURL.path))
 
-        let result = try! String(contentsOf: fileURL, encoding: String.Encoding.utf8)
-        XCTAssertEqual(result, testFileContents)
         do {
+            let result = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
+            XCTAssertEqual(result, testFileContents)
             try removeTemporaryItem(withPathComponent: testFilename)
         } catch {
-            XCTFail()
+            XCTFail("Try should succeed")
         }
     }
 }
