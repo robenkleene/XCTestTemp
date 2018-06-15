@@ -7,6 +7,9 @@ ci: lint test
 lint:
 	swiftlint
 
+autocorrect:
+	swiftlint autocorrect
+
 build:
 	xcodebuild build
 
