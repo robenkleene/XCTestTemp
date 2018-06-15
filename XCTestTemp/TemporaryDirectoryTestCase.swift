@@ -19,10 +19,9 @@ open class TemporaryDirectoryTestCase: XCTestCase {
 
     public var temporaryDirectoryPath: String!
     public var temporaryDirectoryURL: URL! {
-        get {
-            return URL(fileURLWithPath:temporaryDirectoryPath)
-        }
+        return URL(fileURLWithPath: temporaryDirectoryPath)
     }
+
     public var identifier: String {
         let removeCharacterSet = NSCharacterSet.alphanumerics.inverted
         // The `"\(className)"` might also be useful for the identifier.
@@ -117,7 +116,7 @@ open class TemporaryDirectoryTestCase: XCTestCase {
 
     // MARK: Override
 
-    override open func setUp() {
+    open override func setUp() {
         super.setUp()
 
         if let temporaryDirectory = NSTemporaryDirectory() as String? {
@@ -136,8 +135,8 @@ open class TemporaryDirectoryTestCase: XCTestCase {
             do {
                 try FileManager.default
                     .createDirectory(atPath: path,
-                        withIntermediateDirectories: true,
-                        attributes: nil)
+                                     withIntermediateDirectories: true,
+                                     attributes: nil)
             } catch let error as NSError {
                 XCTAssertNil(false, "Creating the directory should succeed \(error)")
             }
@@ -148,7 +147,7 @@ open class TemporaryDirectoryTestCase: XCTestCase {
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
     }
 
-    override open func tearDown() {
+    open override func tearDown() {
         super.tearDown()
 
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
