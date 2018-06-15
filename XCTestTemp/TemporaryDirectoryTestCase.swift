@@ -14,15 +14,14 @@ enum TemporaryDirectoryError: Error {
 }
 
 open class TemporaryDirectoryTestCase: XCTestCase {
-    
+
     // MARK: Public
 
     public var temporaryDirectoryPath: String!
     public var temporaryDirectoryURL: URL! {
-        get {
-            return URL(fileURLWithPath:temporaryDirectoryPath)
-        }
+        return URL(fileURLWithPath: temporaryDirectoryPath)
     }
+
     public var identifier: String {
         let removeCharacterSet = NSCharacterSet.alphanumerics.inverted
         // The `"\(className)"` might also be useful for the identifier.
@@ -30,26 +29,27 @@ open class TemporaryDirectoryTestCase: XCTestCase {
             .trimmingCharacters(in: removeCharacterSet)
             .replacingOccurrences(of: " ", with: ".")
     }
-    
+
     struct ClassConstants {
         static let temporaryDirectoryPathPrefix = "/var/folders"
     }
-    
+
     // MARK: Public
-    
+
     public class func resolve(temporaryDirectoryPath path: String) -> String {
         // Remove the `/private` path component that `FSEvents` returns paths
         // with this prefix.
-        let testPathPrefix = ("/private" as NSString).appendingPathComponent(ClassConstants.temporaryDirectoryPathPrefix)
+        let testPathPrefix = ("/private" as NSString)
+            .appendingPathComponent(ClassConstants.temporaryDirectoryPathPrefix)
         let pathPrefixRange = (path as NSString).range(of: testPathPrefix)
         if pathPrefixRange.location == 0 {
             return (path as NSString).replacingCharacters(in: pathPrefixRange,
                                                           with: ClassConstants.temporaryDirectoryPathPrefix)
         }
-        
+
         return path
     }
-    
+
     private class func isValidTemporaryDirectory(atPath path: String) -> Bool {
         var isDir: ObjCBool = false
 
@@ -60,11 +60,11 @@ open class TemporaryDirectoryTestCase: XCTestCase {
         let path = pathForTemporaryItem(withPathComponent: pathComponent)
         return URL(fileURLWithPath: path)
     }
-    
+
     public func pathForTemporaryItem(withPathComponent pathComponent: String) -> String {
         return (temporaryDirectoryPath as NSString).appendingPathComponent(pathComponent)
     }
-    
+
     public func removeTemporaryItem(withPathComponent pathComponent: String) throws {
         let path = (temporaryDirectoryPath as NSString).appendingPathComponent(pathComponent)
         do {
@@ -81,7 +81,7 @@ open class TemporaryDirectoryTestCase: XCTestCase {
             throw error
         }
     }
-    
+
     public func removeTemporaryItem(atPath path: String) throws {
         if !path.hasPrefix(temporaryDirectoryPath) {
             throw TemporaryDirectoryError.notInTemporaryDirectoryError(path: path)
@@ -96,18 +96,18 @@ open class TemporaryDirectoryTestCase: XCTestCase {
     public func isTemporaryItem(atPath path: String) -> Bool {
         return path.hasPrefix(ClassConstants.temporaryDirectoryPathPrefix)
     }
-    
+
     public func isTemporaryItem(at url: URL) -> Bool {
         return url.path.hasPrefix(ClassConstants.temporaryDirectoryPathPrefix)
     }
-    
+
     // MARK: Private
-    
+
     private class func safelyRemoveTemporaryItem(atPath path: String) throws {
         if !path.hasPrefix(ClassConstants.temporaryDirectoryPathPrefix) {
             throw TemporaryDirectoryError.notInTemporaryDirectoryError(path: path)
         }
-        
+
         do {
             try FileManager.default.removeItem(atPath: path)
         } catch let error as NSError {
@@ -117,7 +117,7 @@ open class TemporaryDirectoryTestCase: XCTestCase {
 
     // MARK: Override
 
-    override open func setUp() {
+    open override func setUp() {
         super.setUp()
 
         if let temporaryDirectory = NSTemporaryDirectory() as String? {
@@ -129,29 +129,30 @@ open class TemporaryDirectoryTestCase: XCTestCase {
                 } catch let error as NSError {
                     XCTAssertTrue(false, "Removing the temporary directory should have succeeded \(error)")
                 }
-                // This is not an assert in order to make it easier to fix tests that aren't cleaning up after themselves.
+                // This is not an assert in order to make it easier to fix tests
+                // that aren't cleaning up after themselves.
                 print("Warning: A temporary directory had to be cleaned up at path \(path)")
             }
             XCTAssertFalse(FileManager.default.fileExists(atPath: path), "A file should not exist at the path")
             do {
                 try FileManager.default
                     .createDirectory(atPath: path,
-                        withIntermediateDirectories: true,
-                        attributes: nil)
+                                     withIntermediateDirectories: true,
+                                     attributes: nil)
             } catch let error as NSError {
-                XCTAssertNil(false ,"Creating the directory should succeed \(error)")
+                XCTAssertNil(false, "Creating the directory should succeed \(error)")
             }
-            
+
             temporaryDirectoryPath = path
         }
 
-        XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
+        XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath))
     }
-    
-    override open func tearDown() {
+
+    open override func tearDown() {
         super.tearDown()
-        
-        XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be valid")
+
+        XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath))
 
         do {
             let contents = try FileManager.default.contentsOfDirectory(atPath: temporaryDirectoryPath)
@@ -167,8 +168,8 @@ open class TemporaryDirectoryTestCase: XCTestCase {
         }
 
         // Confirm the temporary directory is removed
-        XCTAssertFalse(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath), "The temporary directory path should be invalid")
-        XCTAssertFalse(FileManager.default.fileExists(atPath: temporaryDirectoryPath), "A file should not exist at the path")
+        XCTAssertFalse(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: temporaryDirectoryPath))
         temporaryDirectoryPath = nil
     }
 }

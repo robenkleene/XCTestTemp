@@ -9,21 +9,27 @@
 import XCTest
 import XCTestTemp
 
-
-
 class XCTestTempTests: TemporaryDirectoryTestCase {
     let testFilename = "test.txt"
     let testFileContents = "test"
-    
+
     func testTemp() {
         let fileURL = urlForTemporaryItem(withPathComponent: testFilename)
-        try! testFileContents.write(to: fileURL, atomically: false, encoding: String.Encoding.utf8)
+        do {
+            try testFileContents.write(to: fileURL, atomically: false, encoding: String.Encoding.utf8)
+        } catch {
+            XCTFail("Try should succeed")
+        }
 
         XCTAssertTrue(isTemporaryItem(at: fileURL))
         XCTAssertTrue(isTemporaryItem(atPath: fileURL.path))
 
-        let result = try! String(contentsOf: fileURL, encoding: String.Encoding.utf8)
-        XCTAssertEqual(result, testFileContents)
-        try! removeTemporaryItem(withPathComponent: testFilename)
+        do {
+            let result = try String(contentsOf: fileURL, encoding: String.Encoding.utf8)
+            XCTAssertEqual(result, testFileContents)
+            try removeTemporaryItem(withPathComponent: testFilename)
+        } catch {
+            XCTFail("Try should succeed")
+        }
     }
 }
