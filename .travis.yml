@@ -2,7 +2,3 @@ language: swift
 osx_image: xcode9.3
 script:
 - make ci
-notifications:
-  slack:
-    rooms:
-      secure: K5xxMEY+7cAI2kLfd/eTAK2D5jlREThl3xZx+jLyhsh/zHtYnEnM6JYRbpxT1L9rHuGVGGwCW7sxsKcCV+m2OTJs5esiMGqNAwgOJp2RuJY8sJlAVc7TzSy5eDjkacG+ErQZZ5HcIqv/hvURHyoCGP4cY+TiMDpozjvrfaTRxRLxDSjFDSyj/UcGxLwLLkTLOoJ8SwBsHXCBTg35l1F/uVD9YabViU9Ery+Oey8ZLOhK8XvGjm6J8R+3465mJmkvQfGEXb7xCUDmXVJcwnQQuT8vV9nPTwHK4ibO/8WwIK2BWxTRS4zrD2nH0M9Tg1VOWWhtZ+yw6CEIEv559Lfq1/tL+TVZN0CCW6h2uBsGvDz54Yzp7RxNo04PNOMHckZze399eS7szNTrFkBJ2XanPa/97b2C1Qpg9Lc+RXqCwlUKZpVf6pMoCS/NWN6dAz5vAyRJ3NuGclujcuoZwHTCnvgUfN17HQ31+uJqL8IdP8Nr5i1gcwW2gesZADcaonrAkzdClKutX2Bjz7JPCCqpJC+DYEMHWErxwRUvkQysKYcA1BAHms4gFV6sWce9BHtQU7QBaPgAbYhYobJWnc9v4N1ld7asu/dO/bkyXymIu+ap67+rTJe/roreg9836YCodudnijll4YW+VZcUkDsw15hiNpdqpg/32bGgb5DcQZo=
