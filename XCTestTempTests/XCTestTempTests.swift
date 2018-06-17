@@ -18,7 +18,7 @@ class XCTestTempTests: TemporaryDirectoryTestCase {
         do {
             try testFileContents.write(to: fileURL, atomically: false, encoding: String.Encoding.utf8)
         } catch {
-            XCTFail("Try should succeed")
+            XCTFail()
         }
 
         XCTAssertTrue(isTemporaryItem(at: fileURL))
@@ -29,7 +29,7 @@ class XCTestTempTests: TemporaryDirectoryTestCase {
             XCTAssertEqual(result, testFileContents)
             try removeTemporaryItem(withPathComponent: testFilename)
         } catch {
-            XCTFail("Try should succeed")
+            XCTFail()
         }
     }
 }
