@@ -7,7 +7,7 @@ ac: autocorrect
 autocorrect: swiftformat swiftlint_autocorrect
 
 lint:
-	swiftlint
+	swiftlint --strict
 
 swiftformat:
 	swiftformat --commas inline .
