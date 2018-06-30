@@ -10,7 +10,7 @@ lint:
 	swiftlint --strict
 
 swiftformat:
-	swiftformat --commas inline .
+	swiftformat --commas inline --exclude Carthage .
 
 swiftlint_autocorrect:
 	swiftlint autocorrect
