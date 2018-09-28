@@ -157,7 +157,10 @@ open class TemporaryDirectoryTestCase: XCTestCase {
         do {
             let contents = try FileManager.default.contentsOfDirectory(atPath: temporaryDirectoryPath)
             if !contents.isEmpty {
-                print("Warning: A temporary directory was not empty during tear down at path \(String(describing: temporaryDirectoryPath))")
+                print("""
+                Warning: A temporary directory was not empty during tear down at
+                path \(String(describing: temporaryDirectoryPath))
+                """)
             }
             XCTAssert(contents.isEmpty, "The contents should be empty")
 
