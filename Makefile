@@ -26,3 +26,4 @@ test:
 		-alltargets \
 		-configuration Debug \
 		-scheme $(SCHEME)
+
