@@ -14,7 +14,6 @@ enum TemporaryDirectoryError: Error {
 }
 
 open class TemporaryDirectoryTestCase: XCTestCase {
-
     // MARK: Public
 
     public var temporaryDirectoryPath: String!
@@ -162,7 +161,9 @@ open class TemporaryDirectoryTestCase: XCTestCase {
                 path \(String(describing: temporaryDirectoryPath))
                 """)
             }
-            XCTAssert(contents.isEmpty, "The contents should be empty")
+            XCTAssert(contents.isEmpty, """
+            The contents should be empty \(String(describing: temporaryDirectoryPath)), \(contents)
+            """)
 
             // Remove the temporary directory
             try type(of: self).safelyRemoveTemporaryItem(atPath: temporaryDirectoryPath)
