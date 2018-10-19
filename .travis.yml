@@ -1,11 +1,10 @@
 language: swift
 osx_image: xcode10
 script: make ci
-xcode_project: XCTestTemp
-xcode_scheme: XCTestTemp
-env:
-  global:
-    - FRAMEWORK_NAME=XCTestTemp
+branches:
+  only:
+    - master
+      - /^\d+\.\d+\.\d+$/
 before_install:
   - brew update
   - brew outdated carthage || brew upgrade carthage
@@ -13,7 +12,7 @@ before_script:
   - make lint
 before_deploy:
   - carthage build --no-skip-current
-  - carthage archive $FRAMEWORK_NAME
+  - carthage archive XCTestTemp
 notifications:
   irc: "chat.freenode.net#thepotionlab-notifications"
 deploy:
