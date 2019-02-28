@@ -14,7 +14,7 @@ before_deploy:
   - carthage build --no-skip-current
   - carthage archive XCTestTemp
 notifications:
-  irc: "chat.freenode.net#thepotionlab-notifications"
+  irc: "chat.freenode.net#repla-development"
 deploy:
   provider: releases
   api_key:
