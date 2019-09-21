@@ -10,7 +10,7 @@ lint:
 	swiftlint --strict
 
 swiftformat:
-	swiftformat --commas inline --exclude Carthage .
+	git ls-files '*.swift' -z | xargs -0 swiftformat --commas inline
 
 swiftlint_autocorrect:
 	swiftlint autocorrect

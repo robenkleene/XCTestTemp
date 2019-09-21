@@ -1,2 +1,3 @@
 -d
+-s travis
 -i "chat.freenode.net#repla-development"
