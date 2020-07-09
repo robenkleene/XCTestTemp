@@ -1,6 +1,6 @@
 SCHEME = XCTestTemp
 
-.PHONY: build test lint autocorrect swiftformat swiftlint_autocorrect bootstrap
+.PHONY: build test lint autocorrect swiftformat swiftlint_autocorrect bootstrap loc
 
 ci: test
 ac: autocorrect
@@ -29,3 +29,5 @@ test:
 		-configuration Debug \
 		-scheme $(SCHEME)
 
+loc:
+	cloc --vcs=git
