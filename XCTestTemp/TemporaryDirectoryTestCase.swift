@@ -116,7 +116,7 @@ open class TemporaryDirectoryTestCase: XCTestCase {
 
     // MARK: Override
 
-    open override func setUp() {
+    override open func setUp() {
         super.setUp()
 
         if let temporaryDirectory = NSTemporaryDirectory() as String? {
@@ -148,7 +148,7 @@ open class TemporaryDirectoryTestCase: XCTestCase {
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath))
     }
 
-    open override func tearDown() {
+    override open func tearDown() {
         super.tearDown()
 
         XCTAssertTrue(type(of: self).isValidTemporaryDirectory(atPath: temporaryDirectoryPath))
