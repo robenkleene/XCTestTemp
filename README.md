@@ -1,4 +1,4 @@
-# `XCTestTemp` [![Build Status](https://travis-ci.org/robenkleene/XCTestTemp.svg?branch=master)](https://travis-ci.org/robenkleene/XCTestTemp)
+# `XCTestTemp` ![Status](https://github.com/robenkleene/xctesttemp/actions/workflows/ci.yml/badge.svg) ![Status](https://github.com/robenkleene/xctesttemp/actions/workflows/release.yml/badge.svg)
 
 A simple `XCTestCase` subclass that creates a temporary directory that the tests can use. If the temporary directory is not completely empty after the test 
 
