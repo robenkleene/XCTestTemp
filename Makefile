@@ -17,7 +17,7 @@ swiftlint_autocorrect:
 
 archive:
 	carthage build --no-skip-current
-	carthage archive StringPlusPath
+	carthage archive XCTestTemp
 
 build:
 	xcodebuild build \
