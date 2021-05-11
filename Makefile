@@ -1,6 +1,6 @@
 SCHEME = XCTestTemp
 
-.PHONY: build test lint autocorrect swiftformat swiftlint_autocorrect bootstrap loc
+.PHONY: build test lint autocorrect swiftformat swiftlint_autocorrect bootstrap loc archive
 
 ci: test
 ac: autocorrect
@@ -14,6 +14,10 @@ swiftformat:
 
 swiftlint_autocorrect:
 	swiftlint autocorrect
+
+archive:
+	carthage build --no-skip-current
+	carthage archive StringPlusPath
 
 build:
 	xcodebuild build \
