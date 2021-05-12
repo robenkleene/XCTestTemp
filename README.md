@@ -34,3 +34,4 @@ Remove temporary items:
 	func removeTemporaryItem(atPathComponent pathComponent: String) throws {
 	func removeTemporaryItem(at URL: URL) throws {
 	func removeTemporaryItem(atPath path: String) throws {
+
