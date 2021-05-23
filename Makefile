@@ -1,6 +1,6 @@
 SCHEME = XCTestTemp
 
-.PHONY: build test lint autocorrect swiftformat swiftlint_autocorrect bootstrap loc archive
+.PHONY: build test lint autocorrect swiftformat swiftlint_autocorrect loc archive
 
 ci: test
 ac: autocorrect
@@ -23,9 +23,6 @@ build:
 	xcodebuild build \
 		-alltargets \
 		-configuration Debug
-
-bootstrap:
-	carthage bootstrap
 
 test:
 	xcodebuild test \
