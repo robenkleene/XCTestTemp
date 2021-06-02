@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: IRC notification
         uses: Gottox/irc-message-action@v1
+        continue-on-error: true
         with:
           channel: '#repla-development'
           nickname: bot-${{ github.run_id }}
@@ -20,6 +21,7 @@ jobs:
       - run: make ci
       - name: IRC notification
         uses: Gottox/irc-message-action@v1
+        continue-on-error: true
         with:
           channel: '#repla-development'
           nickname: bot-${{ github.run_id }}
