@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: IRC notification
         uses: Gottox/irc-message-action@v2
+        timeout-minutes: 1
         continue-on-error: true
         with:
           channel: '#repla-development'
@@ -22,6 +23,7 @@ jobs:
       - run: make ci
       - name: IRC notification
         uses: Gottox/irc-message-action@v2
+        timeout-minutes: 1
         continue-on-error: true
         with:
           channel: '#repla-development'
