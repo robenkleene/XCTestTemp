@@ -2,7 +2,7 @@ SCHEME = XCTestTemp
 
 .PHONY: build test lint autocorrect swiftformat swiftlint_autocorrect loc archive
 
-ci: test
+ci: build
 ac: autocorrect
 autocorrect: swiftformat swiftlint_autocorrect
 
